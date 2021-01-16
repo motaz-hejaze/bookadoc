@@ -21,21 +21,21 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('user_type', 'Superuser')
-        if extra_fields.get('is_staff') is not True:
+        if extra_fields.get('is_staff') != True:
             raise ValueError(_('Please set is_staff=True'))
-        if extra_fields.get('is_superuser') is not True:
+        if extra_fields.get('is_superuser') != True:
             raise ValueError(_('Please set is_superuser=True'))
         return self.create_user(email, password, **extra_fields)
 
     def create_doctor(self, email, password, **extra_fields):
         extra_fields.setdefault('user_type', 'Doctor')
-        if extra_fields.get('user_type') is not 'Doctor':
+        if extra_fields.get('user_type') != 'Doctor':
             raise ValueError(_('Please set user_type=Doctor'))
         return self.create_user(email, password, **extra_fields)
 
     def create_patient(self, email, password, **extra_fields):
         extra_fields.setdefault('user_type', 'Patient')
-        if extra_fields.get('user_type') is not 'Patient':
+        if extra_fields.get('user_type') != 'Patient':
             raise ValueError(_('Please set user_type=Patient'))
 
         
@@ -59,10 +59,11 @@ class CustomUser(AbstractUser):
     user_type = models.CharField(_('User Type'), max_length=9 , blank=True, null=False)
 
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
     objects = CustomUserManager()
 
     class Meta:
-        ordering = ('-date_joined')
+        ordering = ('-date_joined',)
         verbose_name = 'User'
         verbose_name_plural = 'Users'
 
