@@ -50,13 +50,12 @@ class CustomUser(AbstractUser):
     username = models.CharField(
         _('Username'),
         max_length=150,
-        help_text=_('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
-        validators=[username_validator],
+         validators=[username_validator],
         blank=True,
         null=True
     )
     email = models.EmailField(_('Email'), unique=True, blank=False, null=False)
-    user_type = models.CharField(_('User Type'), max_length=9 , blank=True, null=False)
+    user_type = models.CharField(_('User Type'), max_length=20 , blank=True, null=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

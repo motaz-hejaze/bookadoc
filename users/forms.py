@@ -1,17 +1,19 @@
+from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import CustomUser
+from django.contrib.auth import get_user_model
+
+UserModel = get_user_model()
 
 
 class CustomUserCreationForm(UserCreationForm):
-
+    user_type = forms.ChoiceField(choices=UserModel.USER_TYPES)
     class Meta:
-        model = CustomUser
+        model = UserModel
         fields = '__all__'
-        exclude_fields = ('id','last_login')
+
 
 class CustomUserChangeForm(UserChangeForm):
-
+    user_type = forms.ChoiceField(choices=UserModel.USER_TYPES)
     class Meta:
-        model = CustomUser
+        model = UserModel
         fields = '__all__'
-        exclude_fields = ('id','last_login',)
